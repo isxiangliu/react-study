@@ -1,0 +1,28 @@
+{
+    "films":[
+        {
+            "filmId":1,
+            "name":"复仇者联盟",
+            "poster":"./logo192.png",
+            "text":"1111111111",
+            "actors":[
+                {
+                    "name":"刘响",
+                    "role":"导演"
+                }
+            ]
+        },
+        {
+            "filmId":2,
+            "name":"狂飙",
+            "poster":"./logo192.png",
+            "text":"222222222222",
+            "actors":[
+                {
+                    "name":"张三",
+                    "role":"编剧"
+                }
+            ]
+        }
+    ]
+}
