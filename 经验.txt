@@ -1,0 +1,152 @@
+Vue
+1、子组件修改父组件的值
+可以、但不推荐。子组件可以改父组件的值,但不能直接修改,  因为vue设计是单向数据流，数据的流动方向只能是自上往下的方向
+2、vue进行赋值操作，数据更新，视图没有更新
+this.$set( 对象,属性名,值)   原因：当给响应式的对象新增属性时，新增的属性并不会显示到页面中（响应式对象和响应式数组是指在vue初始化时期，利用Object.defineProperty()方法对其进行监听，这样在修改数据时会及时体现在页面上）
+3、this.$nextTick()的理解及使用
+将回调延迟到下次 DOM 更新循环之后执行 （在修改数据之后立即使用它，然后等待DOM更新）
+4、v-if 和v-for能放在一起使用吗
+不应同时使用  v-for比v-if优先级高 每次循环都会执行一遍v-if,消耗性能大
+5、计算属性computed和 监听watch 的区别
+计算属性变量在computed中定义，属性监听在data中定义。
+computed具有缓存功能，当与computed变量相关的变量值不发生改变时，一直用的是缓存中的值  
+计算属性是声明式的描述一个值依赖了其他值，依赖的值改变后重新计算结果更新DOM。属性监听的是定义的变量，当定义的值发生变化时，执行相对应的函数。
+6、对闭包的理解
+在一个函数内创建另一个函数，创建的函数可以访问到当前函数的局部变量。
+闭包的特点
+可以避免使用全局变量,防止全局变量污染;
+变量会常驻在内存中
+外部访问函数内部变量
+闭包的好处和坏处
+好处：可以读取其他函数内部的变量，闭包可以隔离作用域,不暴露私有成员的目的,
+坏处：可能会造成内存泄漏或溢出。
+7、promise
+promise是异步编程的一种解决方案、避免了层层嵌套的回调函数   二个参数：（resolve、reject）成功、失败    三种状态：（pending、fulfilled、rejected）等待状态、成功状态、拒绝状态
+promise.race：就是赛跑的意思  结果捕获的快就返回哪个结果 不管成功还是失败
+promise.all：多个 Promise 任务同时执行，如果全部成功执行，则以数组的方式返回所有 Promise 任务的执行结果       如果有一个 Promise 任务 rejected，则只返回 rejected 任务的结果。
+Promise.prototype.then()：不管是成功还是失败，就都会来到promise对象的then方法，.then()根据其最终状态   .then()接受两个参数：promise对象的状态变为resolved的时候调用、promise对象的状态变为rejected时调用
+Promise.prototype.catch()：如果Promise的状态变为reject时，会被catch捕捉到。一般来说，使用catch方法代替then()的第二个参数。成功的处理逻辑写在.then()里，把失败的处理逻辑写在.cache()里
+Promise.prototype.finally()：不管Promise对象最后状态如何，都会执行操作
+8、async/await
+async、await必须搭配使用。 async修饰的函数返回值是一个promise对象。  await即等待，它的返回值不是Promise对象，而是Promise对象处理之后的结果
+9、数组循环
+for、forEach、map、for of、filter、every、some、find、findIndex、reduce
+forEach：会改变数组本身
+map：不会改变数组本身
+every：如果每一项都符合条件，就返回true，否则返回false。
+some：只要有一项符合条件，就跳出循环，返回true，否则返回false
+find：只要有一项符合条件，就跳出循环，返回第一个符合条件的元素
+findIndex：返回符合条件的元素的索引位置
+reduce：参数：初始值回调函数的返回值、元素item、索引index、数组本身
+10、对象循环
+for in、Object.keys、Object.values、Object.entries
+键值对   键名的数组    键值的数组       键名和键值的数组
+11、浅拷贝与深拷贝
+假设B复制了A，当修改A时，看B是否会发生变化，如果B也跟着变了，说明这是浅拷贝，拿人手短，如果B没变，那就是深拷贝，自食其力。
+浅拷贝：Object.assign、
+深拷贝：JSON.parse（JSON.stringify()）、
+12、vuex
+state:vuex的基本数据，用来存储变量.
+getters：相当于state的计算属性
+mutation：提交更新数据的方法，必须是同步的
+action： 异步操作方法    与mutation区别：1. Action 提交的是 mutation，而不是直接变更状态。 2. Action 可以包含任意异步操作。
+modules：模块化vuex，可以让每一个模块拥有自己的state、mutation、action、getters,使得结构非常清晰，方便管理
+dispatch：异步操作，写法： this.$store.dispatch('action方法名',值)
+commit：同步操作，写法：this.$store.commit('mutations方法名',值)
+vuex页面刷新数据丢失问题：将vuex中的数据直接保存到浏览器缓存中（sessionStorage、localStorage、cookie）。在页面刷新的时候再次请求远程数据，动态更新vuex数据
+13、父子组件生命周期执行顺序
+父beforecreate  ->  父created  ->  父beforeMount  ->  子beforeCreate -> 子created  ->  子beforeMount  ->  子mounted  ->  父mounted
+14、虚拟DOM和diff算法
+虚拟DOM就是为了解决浏览器性能问题而被设计出来的。Diff算法：深度优先遍历，记录差异。在实际代码中，会对新旧两棵树进行一个深度的遍历，每个节点都会有一个标记。每遍历到一个节点就把该节点和新的树进行对比,如果有差异就记录到一个对象中。等更新完成后,再将最终的JS对象映射成真实的DOM,交由浏览器去绘制。
+15、vue的路由模式
+hash、history  他们的区别是hash模式不会包含在http请求中，并且不会重新加载页面，而使用history模式的话，如果前端的url和后端发起请求的url不一致的话，会报404错误，所以使用history模式的话我们需要和后端进行配合
+
+
+
+
+
+react
+1、什么是单向数据流
+数据主要从父节点传到子节点（通过props）,如果父级的某个props改变了，React会重新渲染所有子节点
+2、类组件和函数组件之间的区别是什么
+类组件可以使用其他特性，如状态和生命周期钩子，并且他有this
+函数组件只能接收props渲染到页面，无状态组件，没有this，不能使用生命周期钩子
+函数组件性能要高于类组件，因为类组件使用要实例化，而函数组件直接执行取返回结果即可，为了提高性能，尽量使用函数组件
+3、state和props区别是什么
+state是组件自己管理数据，控制自己的状态，可变
+props是外部传入的数据参数，不可变
+4、react生命周期方法有哪些？
+componentWillMount:在渲染之前执行，用于根组件中的 App 级配置。
+componentDidMount：在第一次渲染之后执行，可以在这里做AJAX请求，DOM 的操作或状态更新以及设置事件监听器。
+componentWillReceiveProps：在初始化render的时候不会执行，它会在组件接受到新的状态(Props)时被触发，一般用于父组件状态更新时子组件的重新渲染
+shouldComponentUpdate：确定是否更新组件。默认情况下，它返回true。如果确定在 state 或 props 更新后组件不需要在重新渲染，则可以返回false，这是一个提高性能的方法。
+componentWillUpdate：在shouldComponentUpdate返回 true 确定要更新组件之前件之前执行。
+componentDidUpdate：它主要用于更新DOM以响应props或state更改。
+componentWillUnmount：它用于取消任何的网络请求，或删除与组件关联的所有事件监听器。
+5、Redux
+redux-thunk中间件  Redux自身只能处理同步数据流、中间件支持异步。Redux 中间件执行时机：在 dispatching action 和 到达 reducer 之间。
+redux 是一个独立专门用于做状态管理的、类似vuex
+Store:整个应用需要管理的数据都在这个Store里面。这个Store我们不能直接去改变，我们只能通过返回一个新的Store去更改它
+action:
+6、react跟原生绑定有什么区别
+React并不会真正的绑定事件到每一个具体dom的元素上，而是采用事件代理的模式。react事件是绑定在document上的：把所有事件绑定到结构的最外层，使用统一的事件监听，原生事件时绑定在DOM上的；
+7、setState
+处在同步逻辑中、异步更新状态，更新真实dom
+处在异步逻辑中、同步更新状态，同步更新真实dom   
+接受第二个参数：回调函数，状态和dom更新完后就会被触发
+8、属性vs状态
+state 的主要作用是用于组件保存、控制、修改自己的可变状态。state 在组件内部初始化，可以被组件自身修改，而外部不能访问也不能修改。你可以认为 state 是一个局部的、只能被组件自身控制的数据源。state 中状态可以通过 this.setstate 方法进行更新，setstate 会导致组件的重新渲染。
+
+props的主要作用是让使用该组件的父组件可以传入参数来配置该组件。它是外部传进来的配置参数,组件内部无法控制也无法修改。除非外都组件主动传入新的props,否则组件的props永远保持不变。
+
+没有state的组件叫无状态组件(stateless component) ,设置了state的叫做有状态组件(statefulcomponent）。因为状态会带来管理的复杂性，我们尽量多地写无状态组件，尽量少地写有状态的组件。这样会降低代码维护的难度，也会在一定程度上增强组件的可复用性。
+9、
+
+
+
+js
+事件委托是利用事件冒泡原理，让节点的父级代为执行事件。而不需要循环遍历元素的子节点，大大减少dom操作；
+缺：
+不能使用this: this指向父元素。
+需要使用e.target: 真正点击的子元素(事件触发源)
+优：
+提高性能:每一个函数都会占用内存空间，只需添加一个事件处理程序代理所有事件,所占用的内存空间更少。 
+
+
+1、vue react里的key作用是什么? 为什么不能用index
+key是虚拟DOM中标识,数据发生变化时,新数据虚拟DOM会根据key跟旧数据虚拟DOM进行比对;
+若对数据增删改查,逆序删除、增加等破坏顺序操作  会增加多余的DOM渲染  仅渲染展示,可以用index下标做为key
+如果结构中包含输入类的 DOM，会产生错误的 DOM 更新
+2、keep-alive实现原理就是将对应的状态放入一个cache对象中，对应的dom节点放入缓存dom中，当下次再次需要渲染时，从对象中获取状态，从缓存dom中移出至挂载dom节点中。
+3、vue是如何解析template的
+template编译成AST语法树 -> 再转换为render函数 最终返回一个VNode(VNode就是Vue的虚拟DOM节点) 。
+4、vue项目首屏加载过慢的一些解决方案
+在index.html文件中引入第三方库
+图片资源压缩以及使用图片懒加载
+vue-router 路由懒加载
+使用定时器和回调函数等记得销毁
+合理使用v-if和v-show
+适当使用闭包避免内存泄漏
+避免意外的全局变量
+5、防抖、节流
+防抖：当一个动作连续触发，只执行最后一次
+节流：在一定时间内只能执行一次
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
