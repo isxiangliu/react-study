@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 export default function App() {
     const [list, setlist] = useState([])
     const [name, setName] = useState("liuxiang")
-    useEffect(() => {   //只会执行一次
+    useEffect(() => {   //只会执行一次  第二个参数依赖性改变会在执行一次
         axios.get("/test.json").then(res => {
             console.log(res.data.films);
             setlist(res.data.films)

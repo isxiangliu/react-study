@@ -49,7 +49,7 @@ export default function App() {
           {
               list.map((item,index)=>{
                 return <li key={item}>
-                    {item}
+                    {item}-{index}
                     <button onClick={()=>del(index)}>del</button>
                 </li>
               })
