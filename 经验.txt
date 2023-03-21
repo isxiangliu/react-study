@@ -104,6 +104,11 @@ props的主要作用是让使用该组件的父组件可以传入参数来配置
 useMemo缓存的结果是函数中return中的结果 用于组件缓存计算结果的值
 useCallback缓存的结果是函数 用于缓存函数 需要配合React.memo使用 并不能阻止函数重新创建,它只能通过依赖决定返回新的函数还是旧的函数,从而在依赖不变的情况下保证函数地址不变
 
+Ts
+interface type 区别
+interface 是接口，用于描述一个对象。
+type 是类型别名，用于给各种类型定义别名，让 TS 写起来更简洁、清晰。
+使用组合或者交叉类型的时候，用 type。 类的 extends 或 implements 时，用 interface。
 
 
 js
